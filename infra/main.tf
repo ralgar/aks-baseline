@@ -43,7 +43,7 @@ resource "azurerm_kubernetes_cluster" "cluster" {
 
 resource "helm_release" "argocd" {
   name             = "argocd"
-  chart            = "${path.module}/../cluster/argocd"
+  chart            = "${path.module}/../cluster/system/argocd"
   dependency_update = true
   namespace        = "argocd"
   create_namespace = true

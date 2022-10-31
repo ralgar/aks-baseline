@@ -1,0 +1,12 @@
+---
+kubeEtcd:
+  # Disabled for managed Kubernetes services
+  enabled: false
+
+kubeControllerManager:
+  # Disabled for managed Kubernetes services
+  enabled: false
+
+kubeScheduler:
+  # Disabled for managed Kubernetes services
+  enabled: false

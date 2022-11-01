@@ -21,7 +21,7 @@ resource "azurerm_kubernetes_cluster" "cluster" {
     os_disk_size_gb = 30
 
     enable_auto_scaling = true
-    min_count           = 2
+    min_count           = 1
     max_count           = 5
     zones               = [1,2,3]
   }

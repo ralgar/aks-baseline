@@ -1,5 +1,7 @@
 ---
 kube-prometheus-stack:
+  namespaceOverride: monitoring
+
   kubeEtcd:
     # Disabled for managed Kubernetes services
     enabled: false

@@ -28,8 +28,8 @@ spec:
         targetRevision: {{ $.Values.gitops.revision }}
       syncPolicy:
         automated:
-          prune: true
-          selfHeal: true
+          prune: false
+          selfHeal: false
         retry:
           limit: 10
           backoff:

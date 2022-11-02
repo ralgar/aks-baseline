@@ -1,5 +1,5 @@
 resource "azurerm_resource_group" "cluster" {
-  name     = "${random_pet.prefix.id}-rg"
+  name     = "${var.prefix}-rg"
   location = var.location
 
   tags = {
@@ -8,10 +8,10 @@ resource "azurerm_resource_group" "cluster" {
 }
 
 resource "azurerm_kubernetes_cluster" "cluster" {
-  name                = "${random_pet.prefix.id}-aks"
+  name                = "${var.prefix}-aks"
   location            = azurerm_resource_group.cluster.location
   resource_group_name = azurerm_resource_group.cluster.name
-  dns_prefix          = "${random_pet.prefix.id}-k8s"
+  dns_prefix          = "${var.prefix}-k8s"
 
   default_node_pool {
     name         = "default"
@@ -47,7 +47,7 @@ resource "helm_release" "argocd" {
 }
 
 resource "local_sensitive_file" "kube_config" {
-  filename = "${path.root}/../output/kubeconfig"
+  filename = "${path.root}/../output/kube_config"
   content  = azurerm_kubernetes_cluster.cluster.kube_config_raw
 
   directory_permission = "0700"

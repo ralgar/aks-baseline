@@ -19,10 +19,10 @@ help:
 
 # Build the infrastructure
 apply:
-	cd $(TF_DIR) && terraform apply
+	cd $(TF_DIR) && terraform apply --auto-approve
 
 destroy:
-	cd $(TF_DIR) && terraform destroy
+	cd $(TF_DIR) && terraform destroy --auto-approve
 
 clean:
 	rm -rf output

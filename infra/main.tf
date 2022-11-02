@@ -1,8 +1,6 @@
-resource "random_pet" "prefix" {}
-
 resource "azurerm_resource_group" "cluster" {
   name     = "${random_pet.prefix.id}-rg"
-  location = var.aksClusterLocation
+  location = var.location
 
   tags = {
     environment = "Demo"
@@ -16,9 +14,9 @@ resource "azurerm_kubernetes_cluster" "cluster" {
   dns_prefix          = "${random_pet.prefix.id}-k8s"
 
   default_node_pool {
-    name            = "default"
-    vm_size         = "Standard_D2_v2_Promo"
-    os_disk_size_gb = 30
+    name         = "default"
+    vm_size      = "Standard_D2_v2_Promo"
+    os_disk_type = "Ephemeral"
 
     enable_auto_scaling = true
     min_count           = 1
@@ -26,15 +24,13 @@ resource "azurerm_kubernetes_cluster" "cluster" {
     zones               = [1,2,3]
   }
 
-  // Auth
-  service_principal {
-    client_id     = var.aksAppID
-    client_secret = var.aksPassword
+  identity {
+    type = "SystemAssigned"
   }
 
   role_based_access_control_enabled = true
   http_application_routing_enabled  = true
-  automatic_channel_upgrade = "stable"
+  automatic_channel_upgrade         = "stable"
 
   tags = {
     environment = azurerm_resource_group.cluster.tags.environment
@@ -42,16 +38,16 @@ resource "azurerm_kubernetes_cluster" "cluster" {
 }
 
 resource "helm_release" "argocd" {
-  name             = "argocd"
-  chart            = "${path.module}/../cluster/system/argocd"
+  name              = "argocd"
+  namespace         = "argocd"
+  chart             = "${path.root}/../cluster/system/argocd"
   dependency_update = true
-  namespace        = "argocd"
-  create_namespace = true
-  atomic = true
+  create_namespace  = true
+  atomic            = true
 }
 
-resource "local_sensitive_file" "kubeconfig" {
-  filename = "${path.module}/../output/kubeconfig"
+resource "local_sensitive_file" "kube_config" {
+  filename = "${path.root}/../output/kubeconfig"
   content  = azurerm_kubernetes_cluster.cluster.kube_config_raw
 
   directory_permission = "0700"

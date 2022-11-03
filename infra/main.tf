@@ -1,55 +1,24 @@
-resource "azurerm_resource_group" "cluster" {
-  name     = "${var.prefix}-rg"
-  location = var.location
+module "aks_cluster" {
+  source = "./modules/aks-cluster"
 
-  tags = {
-    environment = "Demo"
-  }
+  environment = "staging"
+  prefix      = "techdemo"
+  location    = var.location
 }
 
-resource "azurerm_kubernetes_cluster" "cluster" {
-  name                = "${var.prefix}-aks"
-  location            = azurerm_resource_group.cluster.location
-  resource_group_name = azurerm_resource_group.cluster.name
-  dns_prefix          = "${var.prefix}-k8s"
+module "flux_cd" {
+  source = "./modules/flux-cd"
 
-  default_node_pool {
-    name         = "default"
-    vm_size      = "Standard_D2_v2_Promo"
-    os_disk_type = "Ephemeral"
-
-    enable_auto_scaling = true
-    min_count           = 1
-    max_count           = 5
-    zones               = [1,2,3]
-  }
-
-  identity {
-    type = "SystemAssigned"
-  }
-
-  role_based_access_control_enabled = true
-  http_application_routing_enabled  = true
-  automatic_channel_upgrade         = "stable"
-
-  tags = {
-    environment = azurerm_resource_group.cluster.tags.environment
-  }
+  gitops_repo   = "https://github.com/ralgar/testing-aks.git"
+  gitops_branch = "master"
+  gitops_path   = "cluster/"
 }
 
-resource "helm_release" "argocd" {
+/*resource "helm_release" "argocd" {
   name              = "argocd"
   namespace         = "argocd"
   chart             = "${path.root}/../cluster/system/argocd"
   dependency_update = true
   create_namespace  = true
   atomic            = true
-}
-
-resource "local_sensitive_file" "kube_config" {
-  filename = "${path.root}/../output/kube_config"
-  content  = azurerm_kubernetes_cluster.cluster.kube_config_raw
-
-  directory_permission = "0700"
-  file_permission      = "0600"
-}
+}*/

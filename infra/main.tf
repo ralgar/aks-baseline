@@ -8,10 +8,6 @@ module "aks_cluster" {
 
 module "flux_cd" {
   source = "./modules/flux-cd"
-
-  gitops_repo   = "https://github.com/ralgar/testing-aks.git"
-  gitops_branch = "master"
-  gitops_path   = "cluster/"
 }
 
 /*resource "helm_release" "argocd" {

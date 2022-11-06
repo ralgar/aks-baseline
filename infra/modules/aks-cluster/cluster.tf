@@ -30,7 +30,6 @@ resource "azurerm_kubernetes_cluster" "cluster" {
   }
 
   role_based_access_control_enabled = true
-  http_application_routing_enabled  = true
   automatic_channel_upgrade         = "stable"
 
   tags = {

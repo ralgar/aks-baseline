@@ -1,3 +1,14 @@
+variable "cloudflare_api_token" {
+  description = "A Cloudflare API token with sufficient permissions."
+  type        = string
+  sensitive   = true
+}
+
+variable "cloudflare_zone_name" {
+  description = "The name of your Cloudflare zone (root domain)."
+  type        = string
+}
+
 variable "environment" {
   description = "Deployment environment (prod, staging, demo)."
   default     = "demo"

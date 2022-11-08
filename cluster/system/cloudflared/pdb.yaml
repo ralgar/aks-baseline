@@ -1,0 +1,17 @@
+---
+apiVersion: policy/v1
+kind: PodDisruptionBudget
+metadata:
+  name: cloudflared
+  namespace: cloudflared
+  labels:
+    app.kubernetes.io/part-of: cloudflared
+    app.kubernetes.io/component: cloudflared
+spec:
+  minAvailable: 50%
+  selector:
+    matchExpressions:
+      - key: app
+        operator: In
+        values:
+          - cloudflared

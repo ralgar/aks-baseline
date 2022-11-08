@@ -7,5 +7,5 @@ module "aks_cluster" {
 }
 
 module "flux_cd" {
-  source = "./modules/kubernetes/deploy-flux"
+  source = "./modules/kubernetes/flux-cd"
 }

@@ -1,5 +1,5 @@
 module "aks_cluster" {
-  source = "./modules/aks-cluster"
+  source = "./modules/azure/aks-cluster"
 
   environment = "staging"
   prefix      = "techdemo"
@@ -7,5 +7,5 @@ module "aks_cluster" {
 }
 
 module "flux_cd" {
-  source = "./modules/flux-cd"
+  source = "./modules/kubernetes/deploy-flux"
 }

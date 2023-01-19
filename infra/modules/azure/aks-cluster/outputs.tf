@@ -21,3 +21,7 @@ output "client_certificate" {
 output "cluster_ca_certificate" {
   value = azurerm_kubernetes_cluster.cluster.kube_config.0.cluster_ca_certificate
 }
+
+output "resource_group" {
+  value = azurerm_resource_group.cluster
+}

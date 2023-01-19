@@ -14,6 +14,7 @@ help:
 	$(info Possible TARGETs for this project:)
 	$(info   apply      Apply the infrastructure using Terraform)
 	$(info   destroy    Destroy the infrastructure using Terraform)
+	$(info   plan       Plan the infrastructure using Terraform)
 	$(info )
 	$(info )
 
@@ -23,6 +24,9 @@ apply:
 
 destroy:
 	cd $(TF_DIR) && terraform destroy --auto-approve
+
+plan:
+	cd $(TF_DIR) && terraform plan
 
 clean:
 	rm -rf output

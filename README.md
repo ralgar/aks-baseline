@@ -1,37 +1,63 @@
-Prereqs:
+# Baseline AKS Cluster
+
+## Overview
+
+This project follows the GitOps paradigm to provision an AKS Cluster.
+
+**Note:** This is still a WIP
+
+### Features
+
+- [x] Self-updating, using Azure functionality and [Kured](https://kured.dev).
+- [x] Prometheus + Grafana for observability.
+- [ ] Integrated with Azure Key Vault via Azure AD Workload Identity.
+
+## Usage
+
+### Prerequisites
+
 - azure-cli
-- helm
 - kubectl
 
-Steps:
-1. `az login`
-1. `git clone repo`
-1. `cd repo`
-1. Create an Active Directory service principal account:
+### Initial Setup
+
+1. Clone this repository and change directory into it.
 
    ```sh
-   $ az ad sp create-for-rbac
-   {
-     "appId": "aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa",
-     "displayName": "azure-cli-2019-04-11-00-46-05",
-     "name": "http://azure-cli-2019-04-11-00-46-05",
-     "password": "aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa",
-     "tenant": "aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa"
-   }
+   git clone https://repo-path
+   cd repo-path
    ```
 
-1. Update your `terraform.tfvars` file.
+1. Initialize Terraform.
 
    ```sh
-   # terraform.tfvars
-   aksAppID    = "aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa"
-   aksPassword = "aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa"
+   terraform init
    ```
 
-1. `terraform init`
-1. `terraform plan`
-1. `terraform apply`
+1. Login to the Azure CLI.
 
-Destroying:
+   ```sh
+   az login
+   ```
 
-1. `terraform destroy`
+### Creating the cluster
+
+1. (Optional) Review the Terraform plan.
+
+   ```sh
+   terraform plan
+   ```
+
+1. Apply the infrastructure changes.
+
+   ```sh
+   terraform apply
+   ```
+
+### Destroying the cluster
+
+1. Destroy the infrastructure.
+
+   ```sh
+   terraform destroy
+   ```

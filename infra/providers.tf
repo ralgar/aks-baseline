@@ -2,14 +2,22 @@ terraform {
   required_version = ">=1.0"
 
   required_providers {
+    azuread    = { source = "hashicorp/azuread" }
+    azurerm    = { source = "hashicorp/azurerm" }
     flux       = { source = "fluxcd/flux" }
+    helm       = { source = "hashicorp/helm" }
     kubectl    = { source = "gavinbunney/kubectl" }
     kubernetes = { source = "hashicorp/kubernetes" }
   }
 }
 
 provider "azurerm" {
-  features {}
+  features {
+    key_vault {
+      purge_soft_delete_on_destroy    = true
+      recover_soft_deleted_key_vaults = true
+    }
+  }
 }
 
 provider "helm" {

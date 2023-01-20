@@ -32,6 +32,10 @@ resource "azurerm_kubernetes_cluster" "cluster" {
   role_based_access_control_enabled = true
   automatic_channel_upgrade         = "stable"
 
+  // Workload Identity
+  oidc_issuer_enabled       = true
+  workload_identity_enabled = true
+
   tags = {
     environment = azurerm_resource_group.cluster.tags.environment
   }

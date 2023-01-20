@@ -25,3 +25,7 @@ output "cluster_ca_certificate" {
 output "resource_group" {
   value = azurerm_resource_group.cluster
 }
+
+output "oidc_issuer_url" {
+  value = azurerm_kubernetes_cluster.cluster.oidc_issuer_url
+}

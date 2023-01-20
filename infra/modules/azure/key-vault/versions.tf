@@ -6,9 +6,9 @@ terraform {
       source  = "hashicorp/azurerm"
       version = "3.39.1"
     }
-    local = {
-      source  = "hashicorp/local"
-      version = "2.2.3"
+    kubectl = {
+      source  = "gavinbunney/kubectl"
+      version = "1.14.0"
     }
   }
 }

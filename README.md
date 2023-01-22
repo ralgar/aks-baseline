@@ -54,6 +54,41 @@ This project follows the GitOps paradigm to provision an AKS Cluster.
    az provider register --namespace Microsoft.ContainerService
    ```
 
+### CI configuration
+
+If you intend to use a CI workflow to provision the infrastructure, you will
+ need to do some additional configuration.
+
+1. Create an Organization, and an API-driven Workflow in Terraform Cloud.
+
+1. Create an Azure AD Service Principal, with limited scope, for Terraform.
+
+   ```sh
+   export MSYS_NO_PATHCONV=1
+   az ad sp create-for-rbac \
+       --name <service_principal_name> \
+       --role Contributor \
+       --scopes /subscriptions/<subscription_id>
+   ```
+
+1. Using the values provided in the previous step, create the following
+   *sensitive environment variables* in Terraform Cloud.
+
+   ```sh
+   ARM_SUBSCRIPTION_ID="<azure_subscription_id>"
+   ARM_TENANT_ID="<azure_subscription_tenant_id>"
+   ARM_CLIENT_ID="<service_principal_appid>"
+   ARM_CLIENT_SECRET="<service_principal_password>"
+   ```
+
+1. Go to the [Tokens page](https://app.terraform.io/app/settings/tokens) in
+   your Terraform Cloud User Settings, and create a new API token named
+   *GitHub Actions*.
+
+1. In your GitHub repository, create a new secret called `TF_API_TOKEN`
+
+1. Use Pull Requests to *plan* and *apply* the infrastructure.
+
 ### Creating the cluster
 
 1. (Optional) Review the Terraform plan.

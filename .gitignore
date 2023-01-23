@@ -4,6 +4,9 @@
 # Cluster testing directory
 cluster/testing/
 
+# Env files (contains credentials)
+env
+
 # Version lock files
 # TODO: Remove for final release
 Chart.lock

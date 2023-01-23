@@ -1,9 +1,11 @@
 resource "azuread_application" "app" {
   display_name = "${local.application}-sp"
+  owners       = [ data.azuread_client_config.current.object_id ]
 }
 
 resource "azuread_service_principal" "app" {
   application_id = azuread_application.app.application_id
+  owners         = [ data.azuread_client_config.current.object_id ]
 }
 
 resource "azuread_service_principal_password" "app" {

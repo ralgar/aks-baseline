@@ -67,8 +67,22 @@ If you intend to use a CI workflow to provision the infrastructure, you will
    export MSYS_NO_PATHCONV=1
    az ad sp create-for-rbac \
        --name <service_principal_name> \
-       --role Contributor \
+       --role Owner \
        --scopes /subscriptions/<subscription_id>
+   ```
+
+1. Grant the required permissions for the Microsoft Graph API.
+
+   ```sh
+   az ad app permission add \
+       --id <service_principal_application_id> \
+       --api 00000003-0000-0000-c000-000000000000 \
+       --api-permissions 1bfefb4e-e0b5-418b-a88f-73c46d2cc8e9=Role
+
+   az ad app permission grant \
+       --id <service_principal_application_id> \
+       --api 00000003-0000-0000-c000-000000000000 \
+       --scope Application.ReadWrite.All
    ```
 
 1. Using the values provided in the previous step, create the following

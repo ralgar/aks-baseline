@@ -15,7 +15,7 @@ jobs:
     environment: production
     defaults:
       run:
-        working-directory: ${{ env.TERRAFORM_WORKING_DIR }}
+        working-directory: infra/
     permissions:
       pull-requests: write
     env:

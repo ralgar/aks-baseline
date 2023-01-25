@@ -12,6 +12,7 @@ jobs:
   terraform:
     name: 'Terraform'
     runs-on: ubuntu-latest
+    environment: production
     defaults:
       run:
         working-directory: ${{ env.TERRAFORM_WORKING_DIR }}
@@ -22,6 +23,9 @@ jobs:
       ARM_TENANT_ID: ${{ secrets.ARM_TENANT_ID }}
       ARM_CLIENT_ID: ${{ secrets.ARM_CLIENT_ID }}
       ARM_CLIENT_SECRET: ${{ secrets.ARM_CLIENT_SECRET }}
+      TF_CLOUD_ORGANIZATION: ${{ secrets.TF_CLOUD_ORGANIZATION }}
+      TF_WORKSPACE: ${{ secrets.TF_WORKSPACE }}
+      TF_IN_AUTOMATION: 'true'
     steps:
       - name: Checkout codebase
         uses: actions/checkout@v3

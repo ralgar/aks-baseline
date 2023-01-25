@@ -1,5 +1,6 @@
 terraform {
   required_version = ">=1.0"
+  cloud {}
 
   required_providers {
     azuread = { source = "hashicorp/azuread" }
@@ -7,13 +8,6 @@ terraform {
     flux    = { source = "fluxcd/flux" }
     helm    = { source = "hashicorp/helm" }
     kubectl = { source = "gavinbunney/kubectl" }
-  }
-
-  cloud {
-    organization = "aks-baseline"
-    workspaces {
-      name = "gh-actions-demo"
-    }
   }
 }
 

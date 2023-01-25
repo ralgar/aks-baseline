@@ -45,6 +45,7 @@ jobs:
 
   environment:
     name: 'Update Environment Status'
+    needs: terraform
     runs-on: ubuntu-latest
     steps:
       - name: Deactivate Deployment

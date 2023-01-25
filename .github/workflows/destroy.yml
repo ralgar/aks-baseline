@@ -1,6 +1,6 @@
 # yamllint disable rule:line-length
 ---
-name: 'Destroy Environment'
+name: "Destroy ${{ github.event.inputs.enviroment }}"
 
 on:  # yamllint disable-line rule:truthy
   workflow_dispatch:
@@ -14,6 +14,7 @@ jobs:
   terraform:
     name: 'Terraform'
     runs-on: ubuntu-latest
+    environment: ${{ github.event.inputs.environment }}
     defaults:
       run:
         working-directory: infra/
@@ -42,9 +43,9 @@ jobs:
         if: github.ref == 'refs/heads/main'
         run: terraform destroy -auto-approve
 
-      - name: start deployment
+      - name: Deactivate Deployment
         uses: bobheadxi/deployments@v1
         with:
           step: deactivate-env
           token: ${{ secrets.GITHUB_TOKEN }}
-          env: production
+          env: ${{ github.event.inputs.environment }}

@@ -41,3 +41,10 @@ jobs:
       - name: Terraform Destroy
         if: github.ref == 'refs/heads/main'
         run: terraform destroy -auto-approve
+
+      - name: start deployment
+        uses: bobheadxi/deployments@v1
+        with:
+          step: deactivate-env
+          token: ${{ secrets.GITHUB_TOKEN }}
+          env: production
